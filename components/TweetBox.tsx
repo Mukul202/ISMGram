@@ -240,7 +240,8 @@ function TweetBox({setTweets}:Props) {
 
           {image && (
             <div className="flex transform cursor-pointer flex-col filter transition duration-150 hover:scale-105 hover:brightness-110">
-              <img
+              <Image
+                loader={myLoader}
                 src={image}
                 className="mt-10 h-40 w-full rounded-xl object-contain shadow-lg"
                 alt=""
@@ -256,7 +257,8 @@ function TweetBox({setTweets}:Props) {
           {imageToPost && (
             <div className="flex transform cursor-pointer flex-col filter transition duration-150 hover:scale-105 hover:brightness-110">
               {/* {setImage('')} */}
-              <img
+              <Image
+                loader={myLoader}
                 src={imageToPost as string}
                 className="mt-10 h-40 w-full rounded-xl object-contain shadow-lg"
                 alt=""
