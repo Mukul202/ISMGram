@@ -52,7 +52,7 @@ interface Props {
 
 // const context=createContext();
 
-const Home: NextPage = ({tweets}: Props) => {
+const Home: NextPage<Props> = ({tweets}) => {
   // console.log(tweets);
 
   const {data:session} =useSession();
@@ -131,6 +131,10 @@ const Home: NextPage = ({tweets}: Props) => {
     }
   },[session?.user?.email])
 
+  const props={
+    changed:changed
+  }
+
   return (
     <div className="lg:max-w-9xl mx-auto max-h-screen overflow-hidden">
       <Head>
@@ -145,7 +149,7 @@ const Home: NextPage = ({tweets}: Props) => {
           {/* {
             // console.log(user)
           } */}
-          <SideBar changed={changed} />
+          <SideBar {...props as any}/>
         {/* </Suspense> */}
         {/* <Suspense fallback={<JumpCircleLoading />}> */}
           <Feed
@@ -154,7 +158,7 @@ const Home: NextPage = ({tweets}: Props) => {
           />
         {/* </Suspense> */}
         {/* <Suspense fallback={<JumpCircleLoading />}> */}
-          <Widgets changed={changed} />
+          <Widgets {...props as any} />
         {/* </Suspense> */}
       </div>
     </div>
