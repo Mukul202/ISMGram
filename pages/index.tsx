@@ -5,6 +5,7 @@ import Head from 'next/head'
 import { Suspense, useEffect, useState,lazy } from 'react'
 import { Toaster } from 'react-hot-toast'
 
+// @ts-ignore
 import loadable from '@loadable/component'
 const { BoxLoading, JumpCircleLoading, MeteorRainLoading, ThreeHorseLoading } =require('react-loadingg');
 
