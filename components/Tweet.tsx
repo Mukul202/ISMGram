@@ -30,8 +30,8 @@ function Tweet({tweet}:Props) {
 
   // const {data:session}=useSession();
 
-  const userRedux=useSelector<any>(state => state.user);
-  const user=userRedux['user'];
+  const user=useSelector<any>(state => state.user.user);
+  // const user=userRedux['user'];
 
   const [comments,setComments]=useState<Comment[]>([]);
 

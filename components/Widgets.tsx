@@ -25,7 +25,9 @@ import { useSelector } from 'react-redux'
 
 function Widgets(changed:boolean) {
 
-  const {user}=useSelector<any>(state => state.user);
+  // const {user}=useSelector<any>(state => state.user);
+  const user = useSelector<any>((state) => state.user.user)
+
 
   // const {data:session} =useSession();
 
@@ -72,12 +74,12 @@ function Widgets(changed:boolean) {
         <SearchIcon className="h-5 w-5 text-gray-400" />
         <form onSubmit={handleSubmit}>
           <input
-            disabled={!user.email}
+            disabled={!user?.email}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             type="text"
             placeholder={
-              user.email ? 'Search Twitter by Name' : 'Login to Search'
+              user?.email ? 'Search Twitter by Name' : 'Login to Search'
             }
             className="flex-1 bg-transparent outline-none"
           />

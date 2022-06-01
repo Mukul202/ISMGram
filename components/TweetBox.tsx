@@ -39,7 +39,7 @@ function TweetBox({setTweets}:Props) {
   // const {data:session}=useSession();
   const [imageUrlBoxIsOpen,setImageUrlBoxIsOpen]=useState<boolean>(false);
 
-  const {user}=useSelector<any>(state => state.user);
+  const user = useSelector<any>((state) => state.user.user)
 
   const addImageToTweet = (e:React.MouseEvent<HTMLButtonElement,globalThis.MouseEvent>) => {
     e.preventDefault();

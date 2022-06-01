@@ -29,7 +29,8 @@ const myLoader = ({ src, width, quality }) => {
 function SideBar(changed:boolean) {
   // const { data: session } = useSession()
 
-  const {user}=useSelector<any>(state => state.user);
+  // const {user}=useSelector<any>(state => state.user);
+  const user = useSelector<any>((state) => state.user.user)
   // const [mounted, setMounted] = useState<boolean>(false)
   // console.log("booted");
   // useEffect(() => {
