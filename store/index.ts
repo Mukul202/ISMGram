@@ -1,6 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './user';
 import logger from 'redux-logger';
+
+// const logger = require('redux-logger');
+
 import { reduxBatch } from '@manaflair/redux-batch'
 
 const store=configureStore({
