@@ -17,9 +17,15 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useSelector } from 'react-redux';
 import Image from 'next/image';
-// import { User } from '../typings';
+import { ReduxUserValue, StoreUser } from '../typings';
 
-const myLoader = ({ src, width, quality }) => {
+interface Props{
+  src:string,
+  width:string,
+  quality:Number
+}
+
+const myLoader = ({ src, width, quality=75 }:Props) => {
   // const { src, width, quality } = props
   // console.log(props);
   // console.log('result %s', `${src}?w=${width}&h=${height}&q=${quality || 75}`);
@@ -30,7 +36,7 @@ function SideBar(changed:boolean) {
   // const { data: session } = useSession()
 
   // const {user}=useSelector<any>(state => state.user);
-  const user = useSelector<any>((state) => state.user.user)
+  const user = useSelector<StoreUser>((state) => state.user.user) as ReduxUserValue
   // const [mounted, setMounted] = useState<boolean>(false)
   // console.log("booted");
   // useEffect(() => {

@@ -6,7 +6,7 @@ import React, { lazy, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import ReactTimeago from 'react-timeago'
-import { Comment, CommentBody, passingQuery, Tweet, User } from '../typings'
+import { Comment, CommentBody, passingQuery, ReduxUserValue, StoreUser, Tweet, User } from '../typings'
 // const fetchComments = lazy(() => import('../utils/fetchComments'))
 import { fetchComments } from '../utils/fetchComments'
 import { fetchLikes } from '../utils/fetchLikes'
@@ -17,45 +17,51 @@ interface Props{
   tweet:Tweet
 }
 
-const myLoader = ({ src, width, quality }) => {
+interface Props2 {
+  src: string
+  width: string
+  quality: Number
+}
+
+const myLoader = ({ src, width, quality }:Props2) => {
   // const { src, width, quality } = props
   // console.log(props);
   // console.log('result %s', `${src}?w=${width}&h=${height}&q=${quality || 75}`);
   return `${src}?width=${width}&q=${quality || 50}`
 }
 
-function Tweet({tweet}:Props) {
-
-  const [input,setInput]=useState<string>('');
+function Tweet({ tweet }: Props) {
+  const [input, setInput] = useState<string>('')
 
   // const {data:session}=useSession();
 
-  const user=useSelector<any>(state => state.user.user);
+  const user = useSelector<StoreUser>(
+    (state) => state.user.user
+  ) as ReduxUserValue
   // const user=userRedux['user'];
 
-  const [comments,setComments]=useState<Comment[]>([]);
+  const [comments, setComments] = useState<Comment[]>([])
 
-  const [likes,setLikes]=useState<string[]>(tweet.likes);
+  const [likes, setLikes] = useState<string[]>(tweet.likes)
 
-  const [commentBoxVisible,setCommentBoxVisible]=useState<boolean>(false);
+  const [commentBoxVisible, setCommentBoxVisible] = useState<boolean>(false)
 
   const refreshComments = async () => {
-    const comments : Comment[] =await fetchComments(tweet._id);
-    setComments(comments);
+    const comments: Comment[] = await fetchComments(tweet._id)
+    setComments(comments)
   }
 
-  const refreshLikes=async () => {
-    const likes :string[] =await fetchLikes(tweet._id);
-    setLikes(likes);
+  const refreshLikes = async () => {
+    const likes: string[] = await fetchLikes(tweet._id)
+    setLikes(likes)
   }
 
   useEffect(() => {
-    refreshComments();
-    refreshLikes();
-  },[]);
+    refreshComments()
+    refreshLikes()
+  }, [])
 
   const postComment = async () => {
-
     const commentToast = toast.loading('Posting Comment...')
 
     // Comment logic
@@ -80,31 +86,30 @@ function Tweet({tweet}:Props) {
     setInput('')
     setCommentBoxVisible(false)
     refreshComments()
-  } 
+  }
 
-  const handleSubmit = async (e : React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     postComment()
   }
 
   const likeTweet = async () => {
-
-    const name_changed=user.email.toString();
+    const name_changed = user.email.toString()
     // console.log(name_changed);
 
-    if(likes.includes(name_changed)){
+    if (likes.includes(name_changed)) {
       toast.success('You have already liked the post', {
         icon: '😀',
       })
-      return ;
+      return
     }
 
     const tweetToast = toast.loading('Liking Post')
-    
+
     const tweetInfo: passingQuery = {
-      id:tweet._id,
-      new_user:name_changed,
-    };
+      id: tweet._id,
+      new_user: name_changed,
+    }
     // console.log("HI");
     const result = await fetch(`/api/addLike`, {
       body: JSON.stringify(tweetInfo),
@@ -115,7 +120,7 @@ function Tweet({tweet}:Props) {
     // const newTweets = await fetchTweets()
     // setTweets(newTweets)
 
-    refreshLikes();
+    refreshLikes()
 
     toast('Post Liked', {
       icon: '❤️',
@@ -125,31 +130,33 @@ function Tweet({tweet}:Props) {
     return json
   }
 
-
-  const addLike = async (e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
+  const addLike = async (
+    e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>
+  ) => {
     e.preventDefault()
 
-    likeTweet();
+    likeTweet()
   }
 
-  const saveTweet = async (e: React.MouseEvent<SVGSVGElement, globalThis.MouseEvent>) => {
-    e.preventDefault();
+  const saveTweet = async (
+    e: React.MouseEvent<SVGSVGElement, globalThis.MouseEvent>
+  ) => {
+    e.preventDefault()
     // console.log("hey");
 
     // const user:User=await fetchUser(session?.user?.email);
 
-    const tweetInfo:passingQuery={
-      id:user._id,
-      new_user:tweet._id
+    const tweetInfo: passingQuery = {
+      id: user._id,
+      new_user: tweet._id,
     }
-    
-    const res=await fetch('/api/saveTweet',{
-      body:JSON.stringify(tweetInfo),
-      method:'POST',
+
+    const res = await fetch('/api/saveTweet', {
+      body: JSON.stringify(tweetInfo),
+      method: 'POST',
     })
 
-    return res.json();
-
+    return res.json()
   }
 
   return (
@@ -164,10 +171,10 @@ function Tweet({tweet}:Props) {
           height={40}
           width={40}
           layout="raw"
-          sizes='30vw'
+          sizes="30vw"
           priority
-          placeholder='blur'
-          blurDataURL='md.jpg'
+          placeholder="blur"
+          blurDataURL="md.jpg"
         />
         <div>
           <div className="flex items-center space-x-1">
@@ -192,8 +199,8 @@ function Tweet({tweet}:Props) {
               height={240}
               className="m-5 ml-0 mb-1 max-h-60 rounded-lg object-cover shadow-sm"
               sizes="50vw"
-              placeholder='blur'
-              blurDataURL='md.jpg'
+              placeholder="blur"
+              blurDataURL="md.jpg"
               // priority
             />
           )}
@@ -284,7 +291,7 @@ function Tweet({tweet}:Props) {
         </div>
       )}
     </div>
-  ) 
+  )
 }
 
 export default Tweet

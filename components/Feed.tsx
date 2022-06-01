@@ -17,25 +17,11 @@ import Link from 'next/link'
 //   setGlobalTweets: React.Dispatch<React.SetStateAction<Tweet[]>>
 //   // user:User
 // }
-
-interface ReduxUserValue {
-  username: string
-  email: string
-  profileImg: string
-  _id: string
-}
-
-interface ReduxUser {
-  user: ReduxUserValue
-}
-
-interface StoreUser{
-  user:ReduxUser
-}
+import { ReduxUserValue } from '../typings'
 
 function Feed() {
 
-  const user = useSelector<StoreUser>((state) => state.user.user) as ReduxUserValue
+  const user = useSelector<any>((state) => state.user.user) as ReduxUserValue
 
   const [tweets,setTweets]=useState<Tweet[]>([]);
 

@@ -70,3 +70,19 @@ export type passingQuery ={
   id:string,
   new_user:string,
 }
+
+
+export interface ReduxUserValue {
+  username: string
+  email: string
+  profileImg: string
+  _id: string
+}
+
+export interface ReduxUser {
+  user: ReduxUserValue
+}
+
+export interface StoreUser{
+  user:ReduxUser
+}

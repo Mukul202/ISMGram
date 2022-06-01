@@ -9,7 +9,7 @@ import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
-import { Tweet, TweetBody } from '../typings';
+import { ReduxUserValue, StoreUser, Tweet, TweetBody } from '../typings';
 import { fetchTweets } from '../utils/fetchTweets';
 
 interface Props {
@@ -39,7 +39,9 @@ function TweetBox({setTweets}:Props) {
   // const {data:session}=useSession();
   const [imageUrlBoxIsOpen,setImageUrlBoxIsOpen]=useState<boolean>(false);
 
-  const user = useSelector<any>((state) => state.user.user)
+  const user = useSelector<StoreUser>(
+    (state) => state.user.user
+  ) as ReduxUserValue
 
   const addImageToTweet = (e:React.MouseEvent<HTMLButtonElement,globalThis.MouseEvent>) => {
     e.preventDefault();
