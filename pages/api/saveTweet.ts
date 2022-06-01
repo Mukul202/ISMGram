@@ -16,16 +16,16 @@ export default async function handler(
   const mutations={
     mutations:[
       {
-        patch :{
-          id:data.id,
-          insert:{
-            after:"likes[-1]",
-            items:[tweet:{
-              _type:'reference',
-              _ref:data.new_user,
-            }]
-          }
-        }
+        // patch :{
+        //   id:data.id,
+        //   insert:{
+        //     after:"likes[-1]",
+        //     items:[tweet:{
+        //       _type:'reference',
+        //       _ref:data.new_user,
+        //     }]
+        //   }
+        // }
       }
     ]
   }
