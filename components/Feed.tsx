@@ -18,9 +18,16 @@ import Link from 'next/link'
 //   // user:User
 // }
 
+interface ReduxUser{
+  username:string,
+  email:string,
+  profileImg:string,
+  _id:string
+}
+
 function Feed() {
 
-  const user = useSelector<User>((state) => state.user.user)
+  const user = useSelector<ReduxUser>((state) => state.user.user)
 
   const [tweets,setTweets]=useState<Tweet[]>([]);
 

@@ -7,10 +7,7 @@ import {  User } from '../../typings';
 const userQuery = groq`*[_type=="user" && email==$userId && !blockUser][0]{
   _id,
   email,
-  likedTweets,
   profileImg,
-  savedTweets,
-  tweets,
   username
 }
   `
