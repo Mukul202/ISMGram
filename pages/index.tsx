@@ -5,7 +5,7 @@ import Head from 'next/head'
 import { Suspense, useEffect, useState,lazy } from 'react'
 import { Toaster } from 'react-hot-toast'
 
-import loadable from '@loadable/component';
+const loadable =require('@loadable/component/dist/loadable.cjs.js')
 
 // const Feed = dynamic(() => import('../components/Feed'), {
 //   suspense: true,
