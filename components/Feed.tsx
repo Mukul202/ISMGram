@@ -20,7 +20,7 @@ import Link from 'next/link'
 
 function Feed() {
 
-  const user = useSelector<any>((state) => state.user.user)
+  const user = useSelector<User>((state) => state.user.user)
 
   const [tweets,setTweets]=useState<Tweet[]>([]);
 
