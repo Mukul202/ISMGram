@@ -54,7 +54,8 @@ const Home: NextPage = ({tweets}: Props) => {
 
   const {data:session} =useSession();
 
-  const {user}=useSelector<any>(state => state.user);
+  const userRedux=useSelector<any>(state => state.user);
+  const user=userRedux['user'];
 
   const dispatch=useDispatch();
 
