@@ -16,20 +16,20 @@ const SideBarRow = lazy(() => import('./SideBarRow'));
 import { signIn, signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useSelector } from 'react-redux';
-import Image from 'next/image';
+import Image, { ImageLoader } from 'next/image';
 import { ReduxUserValue, StoreUser } from '../typings';
 
 interface Props{
   src:string,
   width:string,
-  quality:Number
+  quality:string
 }
 
-const myLoader = ({ src, width, quality=75 }:Props) => {
+const myLoader = ({ src, width, quality }:Props) => {
   // const { src, width, quality } = props
   // console.log(props);
   // console.log('result %s', `${src}?w=${width}&h=${height}&q=${quality || 75}`);
-  return `${src}?width=${width}&q=${quality || 75}`
+  return `${src}?width=${width}&q=${quality || 75}` as unknown as ImageLoader
 }
 
 function SideBar(changed:boolean) {
