@@ -5,7 +5,7 @@ import Head from 'next/head'
 import { Suspense, useEffect, useState,lazy } from 'react'
 import { Toaster } from 'react-hot-toast'
 
-import loadable from '@loadable/component/'
+import loadable from '@loadable/component'
 const { BoxLoading, JumpCircleLoading, MeteorRainLoading, ThreeHorseLoading } =require('react-loadingg');
 
 // const Feed = dynamic(() => import('../components/Feed'), {
