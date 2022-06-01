@@ -1,86 +1,171 @@
-import type { NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
+import { useSession } from 'next-auth/react'
+// import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import Image from 'next/image'
+import { Suspense, useEffect, useState,lazy } from 'react'
+import { Toaster } from 'react-hot-toast'
 
-const Home: NextPage = () => {
+import loadable from '@loadable/component';
+
+// const Feed = dynamic(() => import('../components/Feed'), {
+//   suspense: true,
+//   loading: <MeteorRainLoading />,
+// })
+const Feed =loadable(() => import('../components/Feed'),{
+  fallback:<BoxLoading />,
+  ssr:false
+})
+const SideBar=loadable(() => import('../components/SideBar'),{
+  fallback:<BoxLoading />,
+  ssr:false
+})
+// const Widgets = dynamic(() => import('../components/Widgets'), {
+//   suspense: true,
+//   loading: <ThreeHorseLoading />,
+// })
+const Widgets=loadable(() => import('../components/Widgets'),{
+  fallback:<BoxLoading />,
+  ssr:false
+});
+
+
+import { Tweet, User, UserBody } from '../typings'
+import { fetchTweetsLoggedOut } from '../utils/fetchTweetsLoggedOut'
+import { fetchUser } from '../utils/fetchUser'
+
+import {
+  BoxLoading,
+  JumpCircleLoading,
+  MeteorRainLoading,
+  ThreeHorseLoading,
+} from 'react-loadingg'
+
+import { userActions } from '../store/user'
+import { useDispatch, useSelector } from 'react-redux'
+
+interface Props {
+  tweets:Tweet[]
+}
+
+// const context=createContext();
+
+const Home: NextPage = ({tweets}: Props) => {
+  // console.log(tweets);
+
+  const {data:session} =useSession();
+
+  const {user}=useSelector<any>(state => state.user);
+
+  const dispatch=useDispatch();
+
+  const [changed,setChanged]=useState<boolean>(false);
+
+  // const [user,setUser]=useState<User|null>(null);
+
+  const addUser = async () => {
+
+    if(!session){
+      return;
+    }
+
+    // console.log(user);
+
+    if(user?._id){
+      return ;
+    }
+
+    const userInfo=session?.user?.email;
+
+    let prevUser:User=await fetchUser(userInfo);
+
+    // let prevUser:(User|null)=prevUserArray.length?prevUserArray[0]:null;
+
+    
+    if(!prevUser?._id){
+      const result =await fetch(`/api/addUser`,{
+        body:JSON.stringify(userInfo),
+        method:'POST',
+      })
+      const json =result.json();
+      
+      prevUser = await fetchUser(userInfo)
+      
+      await dispatch(userActions.login(prevUser))
+      
+      console.log(json);
+    }else{
+      await dispatch(userActions.login(prevUser));
+    }
+
+
+    // const updatedTweets:Tweet[]=await fetchTweets();
+    // setGlobalTweets(updatedTweets);
+  }
+
+  
+  // const [globalTweets,setGlobalTweets]=useState<Tweet[]>(tweets);
+  
+  useEffect(() => {
+    // console.log('Updated!');
+    const userData= setTimeout( async () => {
+      // const userEmail=session?.user?.email;
+      // const userAdded=await fetchUser(userEmail);
+      // dispatch(userActions.login(userAdded));
+      if(session?.user){
+        await addUser();
+        // userData();
+      }else{
+        dispatch(userActions.logout());
+      }
+    },2000);
+    setChanged(!changed)
+    return () => {
+      clearTimeout(userData);
+    }
+  },[session?.user?.email])
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
+    <div className="lg:max-w-9xl mx-auto max-h-screen overflow-hidden">
       <Head>
-        <title>Create Next App</title>
+        <title>Twitter</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
+      <Toaster />
 
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="rounded-md bg-gray-100 p-3 font-mono text-lg">
-            pages/index.tsx
-          </code>
-        </p>
-
-        <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and its API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className="flex h-24 w-full items-center justify-center border-t">
-        <a
-          className="flex items-center justify-center gap-2"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-        </a>
-      </footer>
+      <div className="grid grid-cols-9">
+        {/* <Suspense fallback={<JumpCircleLoading />}> */}
+          {/* {
+            // console.log(user)
+          } */}
+          <SideBar changed={changed} />
+        {/* </Suspense> */}
+        {/* <Suspense fallback={<JumpCircleLoading />}> */}
+          <Feed
+          // tweets={globalTweets}
+          // setGlobalTweets={setGlobalTweets}
+          />
+        {/* </Suspense> */}
+        {/* <Suspense fallback={<JumpCircleLoading />}> */}
+          <Widgets changed={changed} />
+        {/* </Suspense> */}
+      </div>
     </div>
   )
 }
-
+ 
 export default Home
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+
+  // console.log(context);
+  
+  const tweets:Tweet[]=await fetchTweetsLoggedOut();
+
+
+  return {
+    props :{
+      tweets,
+    }
+  }
+}
