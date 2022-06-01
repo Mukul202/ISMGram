@@ -29,7 +29,7 @@ const Widgets=loadable(() => import('../components/Widgets'),{
 });
 
 
-import { Tweet, User, UserBody } from '../typings'
+import { ReduxUserValue, StoreUser, Tweet, User, UserBody } from '../typings'
 import { fetchTweetsLoggedOut } from '../utils/fetchTweetsLoggedOut'
 import { fetchUser } from '../utils/fetchUser'
 
@@ -57,7 +57,7 @@ const Home: NextPage = ({tweets}: Props) => {
   // const userRedux=useSelector<any>(state => state.user);
   // const user=userRedux['user'];
 
-  const user = useSelector<any>((state) => state.user.user)
+  const user = useSelector<StoreUser>((state) => state.user.user) as ReduxUserValue
 
 
   const dispatch=useDispatch();
@@ -78,7 +78,7 @@ const Home: NextPage = ({tweets}: Props) => {
       return ;
     }
 
-    const userInfo=session?.user?.email;
+    const userInfo=session?.user?.email as string;
 
     let prevUser:User=await fetchUser(userInfo);
 

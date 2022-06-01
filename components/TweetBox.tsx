@@ -4,7 +4,7 @@ import {
   EyeIcon,
   EyeOffIcon,
 } from '@heroicons/react/outline'
-import Image from 'next/image';
+import Image, { ImageLoader } from 'next/image';
 // import { useSession } from 'next-auth/react';
 import React, { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast';
@@ -16,7 +16,13 @@ interface Props {
   setTweets: React.Dispatch<React.SetStateAction<Tweet[]>>
 }
 
-const myLoader = ({ src, width, quality }) => {
+interface Props2 {
+  src:string,
+  width :string,
+  quality:string
+}
+
+const myLoader = ({ src, width, quality }:Props2) => {
   // const { src, width, quality } = props
   // console.log(props);
   // console.log('result %s', `${src}?w=${width}&h=${height}&q=${quality || 75}`);
@@ -61,7 +67,7 @@ function TweetBox({setTweets}:Props) {
       profileImg:
         user?.profileImg ||
         'https://scontent.fdel23-1.fna.fbcdn.net/v/t1.6435-9/73146659_2463053793907875_9119669325643382784_n.jpg?_nc_cat=102&ccb=1-6&_nc_sid=e3f864&_nc_ohc=m52jFoeD-3gAX_67s5g&tn=KNZwyPaDreWqYPu3&_nc_ht=scontent.fdel23-1.fna&oh=00_AT_w7tnbUEbwuwdgbgW8FfB300dntkWn2wlwtqrZ30n4Xg&oe=629C43FE',
-      image:image || imageToPost,
+      image:image || imageToPost as string,
       likes:[],
       privacy:!visible,
     }
@@ -139,16 +145,14 @@ function TweetBox({setTweets}:Props) {
   return (
     <div className="flex space-x-2 p-5">
       <Image
-        loader={myLoader as any}
+        loader={myLoader as any as ImageLoader}
         className="mt-4 h-14 w-14 rounded-full object-cover"
-        src={
-          user?.profileImg || 'md.jpg'
-        }
+        src={user?.profileImg || 'md.jpg'}
         height={56}
         width={56}
         alt="md.jpg"
-        layout='raw'
-        sizes='50vw'
+        layout="raw"
+        sizes="50vw"
         priority
       />
       <div className="flex flex-1 items-center pl-2">
@@ -159,7 +163,11 @@ function TweetBox({setTweets}:Props) {
             onChange={(e) => setInput(e.target.value)}
             className="h-24 w-full text-xl outline-none placeholder:text-xl disabled:bg-inherit"
             type="text"
-            placeholder={user._id ? `Hey ${user.username} What's happening?🤩` : 'Login to tweet🙃'}
+            placeholder={
+              user._id
+                ? `Hey ${user.username} What's happening?🤩`
+                : 'Login to tweet🙃'
+            }
           />
           <div className="flex items-center">
             <div className="flex flex-1 space-x-2 text-twitter">
@@ -249,7 +257,7 @@ function TweetBox({setTweets}:Props) {
             <div className="flex transform cursor-pointer flex-col filter transition duration-150 hover:scale-105 hover:brightness-110">
               {/* {setImage('')} */}
               <img
-                src={imageToPost}
+                src={imageToPost as string}
                 className="mt-10 h-40 w-full rounded-xl object-contain shadow-lg"
                 alt=""
               />

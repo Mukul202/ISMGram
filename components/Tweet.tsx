@@ -1,5 +1,5 @@
 import { ChatAlt2Icon, DownloadIcon, HeartIcon, SwitchHorizontalIcon } from '@heroicons/react/outline'
-import Image from 'next/image'
+import Image, { ImageLoader } from 'next/image'
 // import { useSession } from 'next-auth/react'
 // import dynamic from 'next/dynamic'
 import React, { lazy, useEffect, useState } from 'react'
@@ -164,7 +164,7 @@ function Tweet({ tweet }: Props) {
       <div className="flex space-x-3">
         {/* {console.log(tweet)} */}
         <Image
-          loader={myLoader}
+          loader={myLoader as any as ImageLoader}
           className="h-10 w-10 rounded-full object-cover"
           src={tweet.profileImg}
           alt="Author"
@@ -191,7 +191,7 @@ function Tweet({ tweet }: Props) {
           <p className="pt-1">{tweet.text}</p>
           {tweet.image && (
             <Image
-              loader={myLoader}
+              loader={myLoader as any as ImageLoader}
               src={tweet.image}
               alt="Tweet Image"
               layout="raw"
@@ -262,7 +262,7 @@ function Tweet({ tweet }: Props) {
               <div key={comment._id} className="relative flex space-x-2">
                 <hr className="absolute left-5 top-10 h-8 border-x border-twitter/30" />
                 <Image
-                  loader={myLoader}
+                  loader={myLoader as any as ImageLoader}
                   src={comment.profileImg || 'md.jpg'}
                   className="mt-2 h-7 w-7 rounded-full object-cover"
                   alt="Author image"

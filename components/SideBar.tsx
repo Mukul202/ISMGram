@@ -74,7 +74,7 @@ function SideBar(changed:boolean) {
         </div>
       )}
       <div
-        onClick={user._id ? signOut : signIn}
+        onClick={user._id ? signOut : signIn as any}
         className="group flex max-w-fit cursor-pointer items-center space-x-2 rounded-full px-4 py-3 transition-all duration-200 hover:bg-gray-100"
       >
         {/* <SideBarRow */}
