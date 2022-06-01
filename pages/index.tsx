@@ -5,7 +5,8 @@ import Head from 'next/head'
 import { Suspense, useEffect, useState,lazy } from 'react'
 import { Toaster } from 'react-hot-toast'
 
-const loadable =require('@loadable/component/dist/loadable.cjs.js')
+import loadable from '@loadable/component/'
+const { BoxLoading, JumpCircleLoading, MeteorRainLoading, ThreeHorseLoading } =require('react-loadingg');
 
 // const Feed = dynamic(() => import('../components/Feed'), {
 //   suspense: true,
@@ -33,12 +34,13 @@ import { ReduxUserValue, StoreUser, Tweet, User, UserBody } from '../typings'
 import { fetchTweetsLoggedOut } from '../utils/fetchTweetsLoggedOut'
 import { fetchUser } from '../utils/fetchUser'
 
-import {
-  BoxLoading,
-  JumpCircleLoading,
-  MeteorRainLoading,
-  ThreeHorseLoading,
-} from 'react-loadingg'
+// import {
+//   BoxLoading,
+//   JumpCircleLoading,
+//   MeteorRainLoading,
+//   ThreeHorseLoading,
+// } from 'react-loadingg'
+
 
 import { userActions } from '../store/user'
 import { useDispatch, useSelector } from 'react-redux'

@@ -18,11 +18,11 @@ interface Props {
 
 interface Props2 {
   src:string,
-  width :string,
-  quality:string
+  width :number,
+  // quality:number|undefined
 }
 
-const myLoader = ({ src, width, quality }:Props2) => {
+const myLoader = ({ src, width }:Props2,quality:number|undefined=75) => {
   // const { src, width, quality } = props
   // console.log(props);
   // console.log('result %s', `${src}?w=${width}&h=${height}&q=${quality || 75}`);

@@ -21,15 +21,15 @@ import { ReduxUserValue, StoreUser } from '../typings';
 
 interface Props{
   src:string,
-  width:string,
-  quality:string
+  width:number,
+  // quality:number|undefined
 }
 
-const myLoader = ({ src, width, quality }:Props) => {
+const myLoader = ({ src, width}:Props,quality:number|undefined=75) => {
   // const { src, width, quality } = props
   // console.log(props);
   // console.log('result %s', `${src}?w=${width}&h=${height}&q=${quality || 75}`);
-  return `${src}?width=${width}&q=${quality || 75}` as unknown as ImageLoader
+  return `${src}?width=${width}&q=${quality || 75}`
 }
 
 function SideBar(changed:boolean) {
@@ -51,7 +51,7 @@ function SideBar(changed:boolean) {
     <div className="col-span-2 flex flex-col items-center px-4 md:items-start">
       <a href="https://mailer-daemon.vercel.app" target={'_blank'}>
         <Image
-          loader={myLoader as any as ImageLoader}
+          loader={myLoader}
           className="m-3 h-10 w-10 cursor-pointer"
           src="/md.jpg"
           alt="MD logo"
