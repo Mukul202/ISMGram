@@ -145,7 +145,7 @@ function TweetBox({setTweets}:Props) {
   return (
     <div className="flex space-x-2 p-5">
       <Image
-        loader={myLoader as any as ImageLoader}
+        loader={myLoader}
         className="mt-4 h-14 w-14 rounded-full object-cover"
         src={user?.profileImg || 'md.jpg'}
         height={56}

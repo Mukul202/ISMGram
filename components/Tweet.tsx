@@ -19,11 +19,10 @@ interface Props{
 
 interface Props2 {
   src: string
-  width: string
-  quality: Number
+  width: number
 }
 
-const myLoader = ({ src, width, quality }:Props2) => {
+const myLoader = ({ src, width }:Props2,quality:number|undefined=50) => {
   // const { src, width, quality } = props
   // console.log(props);
   // console.log('result %s', `${src}?w=${width}&h=${height}&q=${quality || 75}`);
@@ -164,7 +163,7 @@ function Tweet({ tweet }: Props) {
       <div className="flex space-x-3">
         {/* {console.log(tweet)} */}
         <Image
-          loader={myLoader as any as ImageLoader}
+          loader={myLoader}
           className="h-10 w-10 rounded-full object-cover"
           src={tweet.profileImg}
           alt="Author"
