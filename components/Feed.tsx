@@ -18,13 +18,15 @@ import Link from 'next/link'
 //   // user:User
 // }
 
+interface ReduxUserValue {
+  username: string
+  email: string
+  profileImg: string
+  _id: string
+}
+
 interface ReduxUser {
-  user: {
-    username: string
-    email: string
-    profileImg: string
-    _id: string
-  }
+  user: ReduxUserValue
 }
 
 interface StoreUser{
@@ -33,7 +35,7 @@ interface StoreUser{
 
 function Feed() {
 
-  const user = useSelector<StoreUser>((state) => state.user?.user)
+  const user = useSelector<StoreUser>((state) => state.user.user) as ReduxUserValue
 
   const [tweets,setTweets]=useState<Tweet[]>([]);
 
