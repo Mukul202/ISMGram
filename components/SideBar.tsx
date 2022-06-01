@@ -51,9 +51,9 @@ function SideBar(changed:boolean) {
     <div className="col-span-2 flex flex-col items-center px-4 md:items-start">
       <a href="https://mailer-daemon.vercel.app" target={'_blank'}>
         <Image
-          loader={myLoader}
+          loader={myLoader as any as ImageLoader}
           className="m-3 h-10 w-10 cursor-pointer"
-          src="md.jpg"
+          src="/md.jpg"
           alt="MD logo"
           width={40}
           height={40}
