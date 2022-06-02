@@ -73,15 +73,15 @@ const Home: NextPage<Props> = ({tweets}) => {
 
   const addUser = async () => {
 
-    if(!session){
-      return;
+    if (!session || user._id) {
+      return
     }
 
-    // console.log(user);
+    // // console.log(user);
 
-    if(user?._id){
-      return ;
-    }
+    // if(user._id){
+    //   return ;
+    // }
 
     const userInfo=session?.user?.email as string;
 
@@ -90,7 +90,7 @@ const Home: NextPage<Props> = ({tweets}) => {
     // let prevUser:(User|null)=prevUserArray.length?prevUserArray[0]:null;
 
     
-    if(!prevUser?._id){
+    if(!prevUser){
       const result =await fetch(`/api/addUser`,{
         body:JSON.stringify(userInfo),
         method:'POST',
@@ -132,10 +132,6 @@ const Home: NextPage<Props> = ({tweets}) => {
       clearTimeout(userData);
     }
   },[session?.user?.email])
-
-  const props={
-    changed:changed
-  }
 
   return (
     <div className="lg:max-w-9xl mx-auto max-h-screen overflow-hidden">
