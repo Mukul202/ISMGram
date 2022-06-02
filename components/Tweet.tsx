@@ -77,12 +77,13 @@ function Tweet({ tweet }: Props) {
       body: JSON.stringify(comment),
       method: 'POST',
     }).then(async (res) => {
+      setInput('')
+      setCommentBoxVisible(false)
+      // setComments([...comments,comment]);
+      await refreshComments()
       toast.success('Comment Posted!', {
         id: commentToast,
       })
-      setInput('')
-      setCommentBoxVisible(false)
-      await refreshComments()
       return res
     }).catch(err => {
       console.log(err);
