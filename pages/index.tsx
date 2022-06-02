@@ -89,10 +89,19 @@ const Home: NextPage<Props> = ({tweets}) => {
 
     // let prevUser:(User|null)=prevUserArray.length?prevUserArray[0]:null;
 
+    console.log('prevUser');
+    console.log(prevUser);
     
-    if(!prevUser){
+    if(prevUser===null){
+
+      const userbody={
+        username:session?.user?.name,
+        email:session?.user?.email,
+        profileImg:session?.user?.image
+      }
+
       const result =await fetch(`/api/addUser`,{
-        body:JSON.stringify(userInfo),
+        body:JSON.stringify(userbody),
         method:'POST',
       })
       const json =result.json();
@@ -101,7 +110,7 @@ const Home: NextPage<Props> = ({tweets}) => {
       
       await dispatch(userActions.login(prevUser))
       
-      console.log(json);
+      // console.log(json);
     }else{
       await dispatch(userActions.login(prevUser));
     }
