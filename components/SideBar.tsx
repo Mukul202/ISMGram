@@ -11,14 +11,20 @@ import {
   HomeIcon,
 } from '@heroicons/react/outline'
 
-const SideBarRow = lazy(() => import('./SideBarRow'));
+const {JumpCircleLoading}=require("react-loadingg")
+
+const SideBarRow = dynamic(() => import('./SideBarRow'),{
+  loading:() => <JumpCircleLoading />,
+  ssr:false
+});
 // import SideBarRow from './SideBarRow'
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { signIn, signOut } from 'next-auth/react'
 import Link from 'next/link'
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import Image from 'next/image';
-import { ReduxUserValue, StoreUser } from '../typings';
+// import { ReduxUserValue, StoreUser } from '../typings';
 import { useAppSelector } from '../store/hooks';
+import dynamic from 'next/dynamic';
 
 interface Props{
   src:string,

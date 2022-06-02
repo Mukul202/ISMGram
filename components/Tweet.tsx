@@ -42,6 +42,8 @@ function Tweet({ tweet }: Props) {
 
   const [likes, setLikes] = useState<string[]>(tweet.likes)
 
+  const [liked,setLiked]=useState<boolean>(false);
+
   const [commentBoxVisible, setCommentBoxVisible] = useState<boolean>(false)
 
   const refreshComments = async () => {
@@ -83,7 +85,7 @@ function Tweet({ tweet }: Props) {
 
     setInput('')
     setCommentBoxVisible(false)
-    refreshComments()
+    await refreshComments()
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -95,12 +97,14 @@ function Tweet({ tweet }: Props) {
     const name_changed = user.email?.toString()
     // console.log(name_changed);
 
-    if (likes.includes(name_changed as string)) {
+    if (liked || likes.includes(name_changed as string)) {
       toast.success('You have already liked the post', {
         icon: '😀',
       })
       return
     }
+
+    setLiked(true)
 
     const tweetToast = toast.loading('Liking Post')
 
@@ -118,7 +122,7 @@ function Tweet({ tweet }: Props) {
     // const newTweets = await fetchTweets()
     // setTweets(newTweets)
 
-    refreshLikes()
+    await refreshLikes()
 
     toast('Post Liked', {
       icon: '❤️',
@@ -160,7 +164,6 @@ function Tweet({ tweet }: Props) {
   return (
     <div className="flex flex-col space-x-3 border-y border-gray-100 p-5">
       <div className="flex space-x-3">
-        {/* {console.log(tweet)} */}
         <Image
           loader={myLoader}
           className="h-10 w-10 rounded-full object-cover"
@@ -189,7 +192,7 @@ function Tweet({ tweet }: Props) {
           <p className="pt-1">{tweet.text}</p>
           {tweet.image && (
             <Image
-              loader={myLoader as any as ImageLoader}
+              loader={myLoader}
               src={tweet.image}
               alt="Tweet Image"
               layout="raw"
@@ -260,7 +263,7 @@ function Tweet({ tweet }: Props) {
               <div key={comment._id} className="relative flex space-x-2">
                 <hr className="absolute left-5 top-10 h-8 border-x border-twitter/30" />
                 <Image
-                  loader={myLoader as any as ImageLoader}
+                  loader={myLoader}
                   src={comment.profileImg || 'md.jpg'}
                   className="mt-2 h-7 w-7 rounded-full object-cover"
                   alt="Author image"

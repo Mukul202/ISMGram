@@ -1,9 +1,24 @@
-import React, { lazy, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { RefreshIcon } from '@heroicons/react/outline'
-import { Tweet, User } from '../typings'
-// import dynamic from 'next/dynamic'
-const TweetBox=lazy(() => import("./TweetBox"))
-const TweetComponent = lazy(() => import('../components/Tweet'))
+import { Tweet } from '../typings'
+
+const {
+  BoxLoading,
+  JumpCircleLoading,
+  MeteorRainLoading,
+  ThreeHorseLoading,
+} = require('react-loadingg')
+
+
+import dynamic from 'next/dynamic'
+const TweetBox=dynamic(() => import("./TweetBox"),{
+  ssr:false,
+  loading: () => <JumpCircleLoading />
+})
+const TweetComponent = dynamic(() => import('../components/Tweet'), {
+  loading:() => <JumpCircleLoading />,
+  ssr: false,
+})
 // import TweetComponent from "../components/Tweet";
 import { fetchTweets } from '../utils/fetchTweets';
 import toast from 'react-hot-toast';
@@ -19,6 +34,7 @@ import Link from 'next/link'
 // }
 // import { ReduxUserValue } from '../typings'
 import { useAppSelector } from '../store/hooks'
+// import loadable from '@loadable/component'
 
 function Feed() {
   const user = useAppSelector((state) => state.user.user)

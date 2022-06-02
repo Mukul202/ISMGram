@@ -13,20 +13,20 @@ const { BoxLoading, JumpCircleLoading, MeteorRainLoading, ThreeHorseLoading } =r
 //   suspense: true,
 //   loading: <MeteorRainLoading />,
 // })
-const Feed =loadable(() => import('../components/Feed'),{
-  fallback:<BoxLoading />,
+const Feed =dynamic(() => import('../components/Feed'),{
+  loading: () => <BoxLoading />,
   ssr:false
 })
-const SideBar=loadable(() => import('../components/SideBar'),{
-  fallback:<BoxLoading />,
+const SideBar=dynamic(() => import('../components/SideBar'),{
+  loading: () => <BoxLoading />,
   ssr:false
 })
 // const Widgets = dynamic(() => import('../components/Widgets'), {
 //   suspense: true,
 //   loading: <ThreeHorseLoading />,
 // })
-const Widgets=loadable(() => import('../components/Widgets'),{
-  fallback:<BoxLoading />,
+const Widgets=dynamic(() => import('../components/Widgets'),{
+  loading: () => <BoxLoading />,
   ssr:false
 });
 
@@ -46,6 +46,7 @@ import { fetchUser } from '../utils/fetchUser'
 import { userActions } from '../store/user'
 // import { useDispatch, useSelector } from 'react-redux'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
+import dynamic from 'next/dynamic'
 
 interface Props {
   tweets:Tweet[]
