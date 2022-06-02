@@ -1,5 +1,6 @@
 import { ChatAlt2Icon, DownloadIcon, HeartIcon, SwitchHorizontalIcon } from '@heroicons/react/outline'
 import Image, { ImageLoader } from 'next/image'
+import Link from 'next/link'
 // import { useSession } from 'next-auth/react'
 // import dynamic from 'next/dynamic'
 import React, { lazy, useEffect, useState } from 'react'
@@ -185,7 +186,9 @@ function Tweet({ tweet }: Props) {
         />
         <div>
           <div className="flex items-center space-x-1">
-            <p className="mr-1 font-bold">{tweet.username}</p>
+            <Link href={`/search/${tweet.username}`}>
+              <p className="mr-1 font-bold cursor-pointer">{tweet.username}</p>
+            </Link>
             <p className="hidden text-sm text-gray-500 sm:inline">
               @{tweet.username.replace(/\s+/g, '').toLowerCase()}
             </p>
