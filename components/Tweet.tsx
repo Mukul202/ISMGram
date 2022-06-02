@@ -47,8 +47,9 @@ function Tweet({ tweet }: Props) {
   const [commentBoxVisible, setCommentBoxVisible] = useState<boolean>(false)
 
   const refreshComments = async () => {
-    const comments: Comment[] = await fetchComments(tweet._id)
-    setComments(comments)
+    await fetchComments(tweet._id).then((comments:Comment[]) => {
+      setComments(comments)
+    })
   }
 
   const refreshLikes = async () => {
