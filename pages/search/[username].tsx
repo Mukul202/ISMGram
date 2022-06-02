@@ -60,7 +60,8 @@ export const getStaticPaths= async () => {
   }`
   const users=await sanityClient.fetch(query);
   // console.log(users);
-  const paths=users.map((user:User) => ({
+  const usersFiltered=users.filter((user:User) => user!==null)
+  const paths=usersFiltered.map((user:User) => ({
     params:{
       username:user.username as string
     },
