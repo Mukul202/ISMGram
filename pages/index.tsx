@@ -160,7 +160,7 @@ const Home: NextPage<Props> = ({tweets}) => {
           />
         {/* </Suspense> */}
         {/* <Suspense fallback={<JumpCircleLoading />}> */}
-          <Widgets {...props as any} />
+          <Widgets />
         {/* </Suspense> */}
       </div>
     </div>

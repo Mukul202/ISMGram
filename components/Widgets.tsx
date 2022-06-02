@@ -25,7 +25,7 @@ import { useAppSelector } from '../store/hooks'
 //   // callback: (queryTweets: Tweet[]) => Promise<void>
 // }
 
-function Widgets(changed:boolean) {
+function Widgets() {
 
   // const {user}=useSelector<any>(state => state.user);
   // const user = useSelector<any>((state) => state.user.user)
