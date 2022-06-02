@@ -96,7 +96,7 @@ function Tweet({ tweet }: Props) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    postComment()
+    await postComment()
   }
 
   const likeTweet = async () => {
@@ -110,7 +110,7 @@ function Tweet({ tweet }: Props) {
       return
     }
 
-    setLiked(true)
+    setLikes([...likes,name_changed as string])
 
     const tweetToast = toast.loading('Liking Post')
 
@@ -128,7 +128,7 @@ function Tweet({ tweet }: Props) {
     // const newTweets = await fetchTweets()
     // setTweets(newTweets)
 
-    await refreshLikes()
+    // await refreshLikes()
 
     toast('Post Liked', {
       icon: '❤️',
@@ -143,7 +143,7 @@ function Tweet({ tweet }: Props) {
   ) => {
     e.preventDefault()
 
-    likeTweet()
+    await likeTweet()
   }
 
   const saveTweet = async (
