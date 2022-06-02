@@ -69,23 +69,27 @@ function Tweet({ tweet }: Props) {
       comment: input,
       tweetId: tweet._id,
       username: user.username || 'Unknown User',
-      profileImg: user.profileImg || 'https://links.papareact.com/gll',
+      profileImg: user.profileImg || 'md.jpg',
     }
 
-    const result = await fetch(`/api/addComments`, {
+    await fetch(`/api/addComments`, {
       body: JSON.stringify(comment),
       method: 'POST',
-    })
+    }).then(async (res) => {
+      toast.success('Comment Posted!', {
+        id: commentToast,
+      })
+      setInput('')
+      setCommentBoxVisible(false)
+      await refreshComments()
+      return res
+    }).catch(err => {
+      console.log(err);
+    }) 
     // const json=result.json()
 
     // console.log('WOOHOO we made it', result)
-    toast.success('Comment Posted!', {
-      id: commentToast,
-    })
 
-    setInput('')
-    setCommentBoxVisible(false)
-    await refreshComments()
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
