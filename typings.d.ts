@@ -73,10 +73,10 @@ export type passingQuery ={
 
 
 export interface ReduxUserValue {
-  username: string
-  email: string
-  profileImg: string
-  _id: string
+  username: string|null
+  email: string|null
+  profileImg: string|null
+  _id: string|null
 }
 
 export interface ReduxUser {

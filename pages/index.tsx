@@ -2,7 +2,7 @@ import type { GetServerSideProps, NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 // import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import { Suspense, useEffect, useState,lazy } from 'react'
+import { useEffect, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 
 // @ts-ignore
@@ -31,7 +31,7 @@ const Widgets=loadable(() => import('../components/Widgets'),{
 });
 
 
-import { ReduxUserValue, StoreUser, Tweet, User, UserBody } from '../typings'
+import { Tweet, User } from '../typings'
 import { fetchTweetsLoggedOut } from '../utils/fetchTweetsLoggedOut'
 import { fetchUser } from '../utils/fetchUser'
 
@@ -44,7 +44,8 @@ import { fetchUser } from '../utils/fetchUser'
 
 
 import { userActions } from '../store/user'
-import { useDispatch, useSelector } from 'react-redux'
+// import { useDispatch, useSelector } from 'react-redux'
+import { useAppDispatch, useAppSelector } from '../store/hooks'
 
 interface Props {
   tweets:Tweet[]
@@ -60,10 +61,10 @@ const Home: NextPage<Props> = ({tweets}) => {
   // const userRedux=useSelector<any>(state => state.user);
   // const user=userRedux['user'];
 
-  const user = useSelector<StoreUser>((state) => state.user.user) as ReduxUserValue
+  const user =useAppSelector(state => state.user.user);
 
 
-  const dispatch=useDispatch();
+  const dispatch=useAppDispatch();
 
   const [changed,setChanged]=useState<boolean>(false);
 
@@ -149,7 +150,7 @@ const Home: NextPage<Props> = ({tweets}) => {
           {/* {
             // console.log(user)
           } */}
-          <SideBar {...props as any}/>
+          <SideBar />
         {/* </Suspense> */}
         {/* <Suspense fallback={<JumpCircleLoading />}> */}
           <Feed

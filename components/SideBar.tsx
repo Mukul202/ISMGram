@@ -16,8 +16,9 @@ const SideBarRow = lazy(() => import('./SideBarRow'));
 import { signIn, signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useSelector } from 'react-redux';
-import Image, { ImageLoader } from 'next/image';
+import Image from 'next/image';
 import { ReduxUserValue, StoreUser } from '../typings';
+import { useAppSelector } from '../store/hooks';
 
 interface Props{
   src:string,
@@ -32,11 +33,12 @@ const myLoader = ({ src, width}:Props,quality:number|undefined=75) => {
   return `${src}?width=${width}&q=${quality || 75}`
 }
 
-function SideBar(changed:boolean) {
+function SideBar() {
   // const { data: session } = useSession()
+    const user = useAppSelector((state) => state.user.user)
 
   // const {user}=useSelector<any>(state => state.user);
-  const user = useSelector<StoreUser>((state) => state.user.user) as ReduxUserValue
+  // const user = useSelector<StoreUser>((state) => state.user.user) as ReduxUserValue
   // const [mounted, setMounted] = useState<boolean>(false)
   // console.log("booted");
   // useEffect(() => {
@@ -94,4 +96,4 @@ function SideBar(changed:boolean) {
   )
 }
 
-export default React.memo(SideBar);
+export default SideBar;

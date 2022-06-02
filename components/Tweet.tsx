@@ -4,9 +4,10 @@ import Image, { ImageLoader } from 'next/image'
 // import dynamic from 'next/dynamic'
 import React, { lazy, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useSelector } from 'react-redux'
+// import { useSelector } from 'react-redux'
 import ReactTimeago from 'react-timeago'
-import { Comment, CommentBody, passingQuery, ReduxUserValue, StoreUser, Tweet, User } from '../typings'
+import { useAppSelector } from '../store/hooks'
+import { Comment, CommentBody, passingQuery, Tweet } from '../typings'
 // const fetchComments = lazy(() => import('../utils/fetchComments'))
 import { fetchComments } from '../utils/fetchComments'
 import { fetchLikes } from '../utils/fetchLikes'
@@ -33,10 +34,8 @@ function Tweet({ tweet }: Props) {
   const [input, setInput] = useState<string>('')
 
   // const {data:session}=useSession();
+  const user = useAppSelector((state) => state.user.user)
 
-  const user = useSelector<StoreUser>(
-    (state) => state.user.user
-  ) as ReduxUserValue
   // const user=userRedux['user'];
 
   const [comments, setComments] = useState<Comment[]>([])
@@ -93,10 +92,10 @@ function Tweet({ tweet }: Props) {
   }
 
   const likeTweet = async () => {
-    const name_changed = user.email.toString()
+    const name_changed = user.email?.toString()
     // console.log(name_changed);
 
-    if (likes.includes(name_changed)) {
+    if (likes.includes(name_changed as string)) {
       toast.success('You have already liked the post', {
         icon: '😀',
       })
@@ -107,7 +106,7 @@ function Tweet({ tweet }: Props) {
 
     const tweetInfo: passingQuery = {
       id: tweet._id,
-      new_user: name_changed,
+      new_user: name_changed as string,
     }
     // console.log("HI");
     const result = await fetch(`/api/addLike`, {
@@ -146,7 +145,7 @@ function Tweet({ tweet }: Props) {
     // const user:User=await fetchUser(session?.user?.email);
 
     const tweetInfo: passingQuery = {
-      id: user._id,
+      id: user._id as string,
       new_user: tweet._id,
     }
 

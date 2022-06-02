@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ReduxUser, ReduxUserValue } from "../typings";
 
 // interface ReduxUser{
 //   username:string,
@@ -7,7 +8,7 @@ import { createSlice } from "@reduxjs/toolkit";
 //   _id:string
 // }
 
-const initialState={
+const initialState:ReduxUser={
   user:{
     username:null,
     email:null,
@@ -20,10 +21,10 @@ const userSlice=createSlice({
   name:'user',
   initialState,
   reducers:{
-    login(state,action){
+    login:(state,action:PayloadAction<ReduxUserValue>) => {
       state.user=action.payload
     },
-    logout(state){
+    logout:(state) => {
       state.user={
         username:null,
         email:null,

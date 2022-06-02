@@ -15,8 +15,9 @@ import { InstagramEmbed, YouTubeEmbed } from 'react-social-media-embed'
 // import { fetchQueryTweets } from '../utils/fetchQueryTweets'
 
 // import { BoxLoading } from 'react-loadingg';
-import { useSelector } from 'react-redux'
-import { StoreUser, ReduxUserValue } from '../typings'
+// import { useSelector } from 'react-redux'
+// import { StoreUser, ReduxUserValue } from '../typings'
+import { useAppSelector } from '../store/hooks'
 // import Link from 'next/link'
 
 // interface Props {
@@ -28,8 +29,7 @@ function Widgets(changed:boolean) {
 
   // const {user}=useSelector<any>(state => state.user);
   // const user = useSelector<any>((state) => state.user.user)
-
-  const user = useSelector<StoreUser>((state) => state.user.user) as ReduxUserValue
+  const user = useAppSelector((state) => state.user.user)
 
   // const {data:session} =useSession();
 

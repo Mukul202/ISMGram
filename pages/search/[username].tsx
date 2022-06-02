@@ -1,9 +1,9 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { useEffect } from "react";
-import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
+// import { useEffect } from "react";
+// import toast from "react-hot-toast";
+// import { useSelector } from "react-redux";
 import TweetComponent from "../../components/Tweet";
 import { sanityClient } from "../../sanity";
 import { Tweet, User } from "../../typings";

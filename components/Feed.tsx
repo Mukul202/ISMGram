@@ -9,7 +9,7 @@ import { fetchTweets } from '../utils/fetchTweets';
 import toast from 'react-hot-toast';
 // import { useSession } from 'next-auth/react';
 import { fetchTweetsLoggedOut } from '../utils/fetchTweetsLoggedOut';
-import { useSelector } from 'react-redux'
+// import { useSelector } from 'react-redux'
 import Link from 'next/link'
 
 // interface Props {
@@ -17,11 +17,11 @@ import Link from 'next/link'
 //   setGlobalTweets: React.Dispatch<React.SetStateAction<Tweet[]>>
 //   // user:User
 // }
-import { ReduxUserValue } from '../typings'
+// import { ReduxUserValue } from '../typings'
+import { useAppSelector } from '../store/hooks'
 
 function Feed() {
-
-  const user = useSelector<any>((state) => state.user.user) as ReduxUserValue
+  const user = useAppSelector((state) => state.user.user)
 
   const [tweets,setTweets]=useState<Tweet[]>([]);
 

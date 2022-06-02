@@ -8,8 +8,9 @@ import Image, { ImageLoader } from 'next/image';
 // import { useSession } from 'next-auth/react';
 import React, { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast';
-import { useSelector } from 'react-redux';
-import { ReduxUserValue, StoreUser, Tweet, TweetBody } from '../typings';
+// import { useSelector } from 'react-redux';
+import { useAppSelector } from '../store/hooks';
+import { Tweet, TweetBody } from '../typings';
 import { fetchTweets } from '../utils/fetchTweets';
 
 interface Props {
@@ -45,9 +46,8 @@ function TweetBox({setTweets}:Props) {
   // const {data:session}=useSession();
   const [imageUrlBoxIsOpen,setImageUrlBoxIsOpen]=useState<boolean>(false);
 
-  const user = useSelector<StoreUser>(
-    (state) => state.user.user
-  ) as ReduxUserValue
+  const user = useAppSelector((state) => state.user.user)
+
 
   const addImageToTweet = (e:React.MouseEvent<HTMLButtonElement,globalThis.MouseEvent>) => {
     e.preventDefault();
@@ -66,7 +66,7 @@ function TweetBox({setTweets}:Props) {
       username: user.username || 'Unknown User',
       profileImg:
         user?.profileImg ||
-        'https://scontent.fdel23-1.fna.fbcdn.net/v/t1.6435-9/73146659_2463053793907875_9119669325643382784_n.jpg?_nc_cat=102&ccb=1-6&_nc_sid=e3f864&_nc_ohc=m52jFoeD-3gAX_67s5g&tn=KNZwyPaDreWqYPu3&_nc_ht=scontent.fdel23-1.fna&oh=00_AT_w7tnbUEbwuwdgbgW8FfB300dntkWn2wlwtqrZ30n4Xg&oe=629C43FE',
+        'md.jpg',
       image:image || imageToPost as string,
       likes:[],
       privacy:!visible,
@@ -243,8 +243,13 @@ function TweetBox({setTweets}:Props) {
               <Image
                 loader={myLoader}
                 src={image}
+                width={160}
+                sizes='50vw'
+                height={160}
                 className="mt-10 h-40 w-full rounded-xl object-contain shadow-lg"
-                alt=""
+                alt="Not available"
+                priority
+                layout='raw'
               />
               <p
                 className="text-center text-xs text-red-500"
