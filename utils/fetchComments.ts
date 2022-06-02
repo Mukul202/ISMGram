@@ -1,4 +1,4 @@
-import { Comment } from "../typings";
+import { Comment, CommentBody } from "../typings";
 
 export const fetchComments = async (tweetId:string) => {
   // console.log(tweetId);
