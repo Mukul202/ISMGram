@@ -1,9 +1,9 @@
 import { ChatAlt2Icon, DownloadIcon, HeartIcon, SwitchHorizontalIcon } from '@heroicons/react/outline'
-import Image, { ImageLoader } from 'next/image'
+import Image from 'next/image'
 import Link from 'next/link'
 // import { useSession } from 'next-auth/react'
 // import dynamic from 'next/dynamic'
-import React, { lazy, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 // import { useSelector } from 'react-redux'
 import ReactTimeago from 'react-timeago'
@@ -95,7 +95,7 @@ function Tweet({ tweet }: Props) {
 
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit =async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     await postComment()
   }
@@ -111,6 +111,7 @@ function Tweet({ tweet }: Props) {
       return
     }
 
+    setLiked(true);
     setLikes([...likes,name_changed as string])
 
     const tweetToast = toast.loading('Liking Post')
@@ -147,7 +148,7 @@ function Tweet({ tweet }: Props) {
     await likeTweet()
   }
 
-  const saveTweet = async (
+  const saveTweet =async (
     e: React.MouseEvent<SVGSVGElement, globalThis.MouseEvent>
   ) => {
     e.preventDefault()
@@ -187,7 +188,7 @@ function Tweet({ tweet }: Props) {
         <div>
           <div className="flex items-center space-x-1">
             <Link href={`/search/${tweet.username}`}>
-              <p className="mr-1 font-bold cursor-pointer">{tweet.username}</p>
+              <p className="mr-1 cursor-pointer font-bold">{tweet.username}</p>
             </Link>
             <p className="hidden text-sm text-gray-500 sm:inline">
               @{tweet.username.replace(/\s+/g, '').toLowerCase()}
@@ -224,9 +225,11 @@ function Tweet({ tweet }: Props) {
           <ChatAlt2Icon className="h-5 w-5" />
           <p>{comments.length}</p>
         </div>
-        <div className="flex cursor-pointer items-center space-x-3 text-gray-400">
-          <SwitchHorizontalIcon className="h-5 w-5" />
-        </div>
+        <Link href={`/posts/${tweet._id}`}>
+          <div className="flex cursor-pointer items-center space-x-3 text-gray-400">
+            <SwitchHorizontalIcon className="h-5 w-5" />
+          </div>
+        </Link>
         <form>
           <div
             onClick={(e) => user._id && addLike(e)}

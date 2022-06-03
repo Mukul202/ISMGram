@@ -55,8 +55,7 @@ export default username
 
 export const getStaticPaths= async () => {
 
-  const query = `*[_type=="user"]{
-    _id,
+  const query = `*[_type=="user" && !blockUser]{
     username
   }`
   const users=await sanityClient.fetch(query);
@@ -89,7 +88,6 @@ export const getStaticProps:GetStaticProps = async ({params}) => {
     profileImg,
     image,
     _createdAt,
-    'comments':*[_type=="comment" && tweet._ref==^._id],
   }`
   const tweets=await sanityClient.fetch(query,{
     username:params?.username,
