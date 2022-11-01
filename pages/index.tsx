@@ -145,7 +145,7 @@ const Home: NextPage<Props> = ({tweets}) => {
   return (
     <div className="lg:max-w-9xl mx-auto max-h-screen overflow-hidden">
       <Head>
-        <title>Twitter</title>
+        <title>ISMGram</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
