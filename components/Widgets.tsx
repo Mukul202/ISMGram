@@ -69,7 +69,7 @@ function Widgets() {
   // if(!mounted)return null;
 
   return (
-    <div className="col-span-2 mt-2 hidden h-screen overflow-scroll px-2 scrollbar-hide lg:inline">
+    <div className="row-span-2 mt-2 hidden h-screen overflow-scroll px-2 scrollbar-hide lg:inline">
       {/* Search Box */}
       {/* <Link href={`/search/${input}`}> */}
       <div className="flex items-center space-x-2 rounded-full bg-gray-100 p-3">

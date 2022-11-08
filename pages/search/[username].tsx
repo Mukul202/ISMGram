@@ -1,38 +1,116 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-// import { useEffect } from "react";
-// import toast from "react-hot-toast";
-// import { useSelector } from "react-redux";
+import { useState } from 'react'
 import TweetComponent from "../../components/Tweet";
 import { sanityClient } from "../../sanity";
 import { Tweet, User } from "../../typings";
+import Image from 'next/image'
 
+import {
+  BellIcon,
+  HashtagIcon,
+  BookmarkIcon,
+  CollectionIcon,
+  DotsCircleHorizontalIcon,
+  MailIcon,
+  UserIcon,
+  HomeIcon,
+} from '@heroicons/react/outline'
+const { JumpCircleLoading } = require('react-loadingg')
+import { useAppSelector } from '../../store/hooks'
+import { signIn, signOut } from 'next-auth/react'
+
+import dynamic from 'next/dynamic'
+import { serialize } from "v8";
 // import React from 'react'
 
 interface Props{
   tweets:Tweet[],
   username:string
 }
+const myLoader = ({ src, width }: Props, quality: number | undefined = 75) => {
+  // const { src, width, quality } = props
+  // console.log(props);
+  // console.log('result %s', `${src}?w=${width}&h=${height}&q=${quality || 75}`);
+  return `${src}?width=${width}&q=${quality || 75}`
+}
+const SideBarRow = dynamic(() => import('../../components/SideBarRow'), {
+  loading: () => <JumpCircleLoading />,
+  ssr: false,
+})
 
 function username({ tweets,username }: Props) {
   // debugger;
   // console.log(tweets);
+  const user = useAppSelector((state) => state.user.user)
+
+  const [responsiveNavState, setResponsiveNavState] = useState(false)
+
+  const hamburgerHandler = () => {
+    setResponsiveNavState((prev) => {
+      return !prev
+    })
+  }
+
 
   return (
     <div className="col-span-7 max-h-screen overflow-scroll border-x scrollbar-hide lg:col-span-5 max-w-4xl items-center justify-around m-auto">
       <Head>
         <title>{username}</title>
       </Head>
-      <div className="flex items-center justify-center">
-        <Link href={'/'}>
-          <h1 className="cursor-pointer p-5 pb-0 text-xl font-bold">Home</h1>
-        </Link>
-        {/* <RefreshIcon
-            onClick={handleRefresh}
-            className="mr-5 mt-5 h-8 w-8 cursor-pointer text-twitter transition-all duration-500 ease-out hover:rotate-180 active:scale-125"
-          /> */}
+      <div className="row-span-1 flex items-center shadow">
+      <a href="https://mailer-daemon.vercel.app" target={'_blank'}>
+        <Image
+          loader={myLoader}
+          className="mt-4 ml-4 mb-2 h-8 w-8"
+          src="/md.jpg"
+          alt="MD logo"
+          width={30}
+          height={30}
+          layout="raw"
+          priority
+        />
+      </a>
+      
+      <div className="flex w-full items-center">
+      <div className="flex items-center justify-center w-4/5 pl-2 mr-1 cursor-pointer font-bold text-base">{username}</div>
+      <div className="flex w-1/5 justify-end items-center">
+        <div className="flex justify-between p-2">
+          <div
+            onClick={hamburgerHandler}
+            className="text-300 top-1 block cursor-pointer "
+          >
+            <SideBarRow Icon={DotsCircleHorizontalIcon} title="" /> 
+          </div>
+        </div>
+        <div
+          className={`${
+            responsiveNavState
+              ? 'items-left absolute top-10 z-10 flex h-full w-1/2  flex-col  bg-white pl-3 pt-2 shadow-2xl'
+              : 'hidden'
+          }`}
+        >
+          
+          <Link href={`/search/${user.username}`}>
+            <span>
+              <SideBarRow Icon={UserIcon} title="Profile" />
+            </span>
+          </Link>
+          <Link href={`/`}>
+            <span>
+              <SideBarRow Icon={HashtagIcon} title="Explore" />
+            </span>
+          </Link>
+          <SideBarRow Icon={BellIcon} title="Notifications" />
+          <SideBarRow Icon={MailIcon} title="Messages" />
+          <SideBarRow Icon={BookmarkIcon} title="Bookmarks" />
+          <SideBarRow Icon={CollectionIcon} title="Lists" />
+        
+        </div>
+        </div>
       </div>
+    </div>
 
       {/* TweetBox */}
       {/* <div>

@@ -145,13 +145,13 @@ const Home: NextPage<Props> = ({tweets}) => {
   return (
     <div className="lg:max-w-9xl mx-auto max-h-screen overflow-hidden">
       <Head>
-        <title>ISMGram</title>
+        <title>Twitter</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Toaster />
 
-      <div className="grid grid-cols-9">
+      <div className="grid grid-rows-9">
         {/* <Suspense fallback={<JumpCircleLoading />}> */}
           {/* {
             // console.log(user)

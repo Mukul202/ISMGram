@@ -188,7 +188,7 @@ function Tweet({ tweet }: Props) {
         <div>
           <div className="flex items-center space-x-1">
             <Link href={`/search/${tweet.username}`}>
-              <p className="mr-1 cursor-pointer font-bold">{tweet.username}</p>
+              <p className="mr-1 cursor-pointer font-bold text-sm">{tweet.username}</p>
             </Link>
             <p className="hidden text-sm text-gray-500 sm:inline">
               @{tweet.username.replace(/\s+/g, '').toLowerCase()}
@@ -287,8 +287,8 @@ function Tweet({ tweet }: Props) {
                 />
                 <div>
                   <div className="flex items-center space-x-1">
-                    <p className="mr-1 font-bold">{comment.username}</p>
-                    <p className="hidden text-sm text-gray-500 lg:inline">
+                    <p className="mr-1 text-sm font-bold">{comment.username}</p>
+                    <p className="hidden text-xs text-gray-500 lg:inline">
                       @{comment.username.replace(/\s+/g, '').toLowerCase()}
                     </p>
                     <ReactTimeago
