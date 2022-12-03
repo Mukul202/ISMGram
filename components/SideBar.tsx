@@ -64,7 +64,7 @@ function SideBar() {
   // if (!mounted) return null
 
   return (
-    <div className="row-span-1 flex items-center shadow">
+    <div className="row-span-1 h-12 flex items-center shadow">
       <a href="https://mailer-daemon.vercel.app" target={'_blank'}>
         <Image
           loader={myLoader}
