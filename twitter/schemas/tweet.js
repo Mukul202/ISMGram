@@ -16,7 +16,7 @@ export default {
     },
     {
       name: 'username',
-      title: 'User Name',
+      title: 'User Name/ Anonymous Name',
       type: 'string',
     },
     {

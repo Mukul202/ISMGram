@@ -143,7 +143,7 @@ function TweetBox({setTweets}:Props) {
   }
 
   return (
-    <div className="flex space-x-2 p-5">
+    <div className="flex space-x-2 px-5 py-2">
       <Image
         loader={myLoader}
         className="mt-4 h-14 w-14 rounded-full object-cover"
@@ -161,7 +161,7 @@ function TweetBox({setTweets}:Props) {
             disabled={!user._id}
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="h-24 w-full text-xl outline-none placeholder:text-xl disabled:bg-inherit"
+            className="h-20 w-full text-lg outline-base placeholder:text-base disabled:bg-inherit"
             type="text"
             placeholder={
               user._id

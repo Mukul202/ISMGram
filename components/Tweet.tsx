@@ -101,7 +101,7 @@ function Tweet({ tweet }: Props) {
   }
 
   const likeTweet = async () => {
-    const name_changed = user.email?.toString()
+    const name_changed = user.username?.toString()
     // console.log(name_changed);
 
     if (liked || likes.includes(name_changed as string)) {
@@ -188,7 +188,7 @@ function Tweet({ tweet }: Props) {
         <div>
           <div className="flex items-center space-x-1">
             <Link href={`/search/${tweet.username}`}>
-              <p className="mr-1 cursor-pointer font-bold">{tweet.username}</p>
+              <p className="mr-1 cursor-pointer font-bold text-sm">{tweet.username}</p>
             </Link>
             <p className="hidden text-sm text-gray-500 sm:inline">
               @{tweet.username.replace(/\s+/g, '').toLowerCase()}
@@ -240,13 +240,13 @@ function Tweet({ tweet }: Props) {
             <p>{likes.length}</p>
           </div>
         </form>
-        <div className="flex cursor-pointer items-center space-x-3 text-gray-400">
-          {/* <UploadIcon className="h-5 w-5" /> */}
+        {/* <div className="flex cursor-pointer items-center space-x-3 text-gray-400">
+          <UploadIcon className="h-5 w-5" />
           <DownloadIcon
             onClick={(e) => user._id && saveTweet(e)}
             className="h-5 w-5"
           />
-        </div>
+        </div> */}
       </div>
 
       {commentBoxVisible && (
@@ -287,8 +287,8 @@ function Tweet({ tweet }: Props) {
                 />
                 <div>
                   <div className="flex items-center space-x-1">
-                    <p className="mr-1 font-bold">{comment.username}</p>
-                    <p className="hidden text-sm text-gray-500 lg:inline">
+                    <p className="mr-1 text-sm font-bold">{comment.username}</p>
+                    <p className="hidden text-xs text-gray-500 lg:inline">
                       @{comment.username.replace(/\s+/g, '').toLowerCase()}
                     </p>
                     <ReactTimeago

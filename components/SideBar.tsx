@@ -1,4 +1,5 @@
 import React, { lazy } from 'react'
+import { useState } from 'react'
 
 import {
   BellIcon,
@@ -9,30 +10,32 @@ import {
   MailIcon,
   UserIcon,
   HomeIcon,
+  HeartIcon,
+  SaveIcon,
 } from '@heroicons/react/outline'
 
-const {JumpCircleLoading}=require("react-loadingg")
+const { JumpCircleLoading } = require('react-loadingg')
 
-const SideBarRow = dynamic(() => import('./SideBarRow'),{
-  loading:() => <JumpCircleLoading />,
-  ssr:false
-});
+const SideBarRow = dynamic(() => import('./SideBarRow'), {
+  loading: () => <JumpCircleLoading />,
+  ssr: false,
+})
 // import SideBarRow from './SideBarRow'
 import { signIn, signOut } from 'next-auth/react'
 import Link from 'next/link'
 // import { useSelector } from 'react-redux';
-import Image from 'next/image';
+import Image from 'next/image'
 // import { ReduxUserValue, StoreUser } from '../typings';
-import { useAppSelector } from '../store/hooks';
-import dynamic from 'next/dynamic';
+import { useAppSelector } from '../store/hooks'
+import dynamic from 'next/dynamic'
 
-interface Props{
-  src:string,
-  width:number,
+interface Props {
+  src: string
+  width: number
   // quality:number|undefined
 }
 
-const myLoader = ({ src, width}:Props,quality:number|undefined=75) => {
+const myLoader = ({ src, width }: Props, quality: number | undefined = 75) => {
   // const { src, width, quality } = props
   // console.log(props);
   // console.log('result %s', `${src}?w=${width}&h=${height}&q=${quality || 75}`);
@@ -41,7 +44,14 @@ const myLoader = ({ src, width}:Props,quality:number|undefined=75) => {
 
 function SideBar() {
   // const { data: session } = useSession()
-    const user = useAppSelector((state) => state.user.user)
+  const user = useAppSelector((state) => state.user.user)
+  const [responsiveNavState, setResponsiveNavState] = useState(false)
+
+  const hamburgerHandler = () => {
+    setResponsiveNavState((prev) => {
+      return !prev
+    })
+  }
 
   // const {user}=useSelector<any>(state => state.user);
   // const user = useSelector<StoreUser>((state) => state.user.user) as ReduxUserValue
@@ -56,50 +66,77 @@ function SideBar() {
   // if (!mounted) return null
 
   return (
-    <div className="col-span-2 flex flex-col items-center px-4 md:items-start">
+    <div className="row-span-1 h-12 flex items-center shadow">
       <a href="https://mailer-daemon.vercel.app" target={'_blank'}>
         <Image
           loader={myLoader}
-          className="m-3 h-10 w-10 cursor-pointer"
+          className="mt-4 ml-4 mb-2 h-8 w-8"
           src="/md.jpg"
           alt="MD logo"
-          width={40}
-          height={40}
-          layout='raw'
+          width={30}
+          height={30}
+          layout="raw"
           priority
         />
       </a>
-      {user._id && (
-        <div>
-          <Link href={`/search/${user.username}`}>
-            <span><SideBarRow Icon={HomeIcon} title="Profile" /></span>
-          </Link>
-          <SideBarRow Icon={HashtagIcon} title="Explore" />
-          <SideBarRow Icon={BellIcon} title="Notifications" />
-          <SideBarRow Icon={MailIcon} title="Messages" />
-          <SideBarRow Icon={BookmarkIcon} title="Bookmarks" />
-          <SideBarRow Icon={CollectionIcon} title="Lists" />
+      <div className="flex w-full justify-end items-center pr-2">
+        <div
+          onClick={user._id ? signOut : (signIn as any)}
+          className="group flex max-w-fit cursor-pointer items-center space-x-2 rounded-full px-4 py-3 transition-all duration-200 hover:bg-gray-100"
+        >
+          <UserIcon className="h-6 w-6" />
+          <p className="  font-light group-hover:text-twitter md:inline-flex text-xs">
+            {user.email ? 'Sign Out' : 'Sign In'}
+          </p>
+
         </div>
-      )}
-      <div
-        onClick={user._id ? signOut : signIn as any}
-        className="group flex max-w-fit cursor-pointer items-center space-x-2 rounded-full px-4 py-3 transition-all duration-200 hover:bg-gray-100"
-      >
-        {/* <SideBarRow */}
-        {/* // onClick={session ? signOut : signIn} */}
-        {/* Icon={UserIcon} */}
-        <UserIcon className="h-6 w-6" />
-        {/* title={session ? 'Sign Out' : 'Sign In'} */}
-        <p className="hidden text-base font-light group-hover:text-twitter md:inline-flex lg:text-xl">
-          {user.email ? 'Sign Out' : 'Sign In'}
-        </p>
 
-        {/* /> */}
+        <div className="flex justify-between p-2">
+          <div
+            onClick={hamburgerHandler}
+            className={`${
+              user._id
+                ? "text-300 top-1 block cursor-pointer "
+                : 'hidden'
+            }`}
+          >
+            <SideBarRow Icon={DotsCircleHorizontalIcon} title="" /> 
+          </div>
+        </div>
+        <div
+          className={`${
+            responsiveNavState && user._id
+              ? 'items-left absolute top-10 z-10 flex h-full w-1/2 lg:w-1/4  flex-col  bg-white pl-3 pt-2 shadow-2xl'
+              : 'hidden'
+          }`}
+        >
+          {user._id && (
+            <>
+          <Link href={`/search/${user.username}`}>
+            <span>
+              <SideBarRow Icon={UserIcon} title="Profile" />
+            </span>
+          </Link>
+          {/* <SideBarRow Icon={HashtagIcon} title="Explore" /> */}
+          {/* <SideBarRow Icon={BellIcon} title="Notifications" /> */}
+          {/* <SideBarRow Icon={MailIcon} title="Messages" /> */}
+          {/* <Link href={`/savedPosts/${user.email}`}>
+            <span>
+            <SideBarRow Icon={SaveIcon} title="Saved Posts" />
+            </span>
+          </Link> */}
+          <Link href={`/likedPosts/${user.username}`}>
+            <span>
+              <SideBarRow Icon={HeartIcon} title="Liked Posts" />
+            </span>
+          </Link>
+          {/* <SideBarRow Icon={HeartIcon} title="Liked Posts" /> */}
+          </>
+          )}
+        </div>
       </div>
-
-      <SideBarRow Icon={DotsCircleHorizontalIcon} title="More" />
     </div>
   )
 }
 
-export default SideBar;
+export default SideBar
