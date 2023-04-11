@@ -19,13 +19,10 @@ export default async function handler(
         // patch :{
         //   id:data.id,
         //   insert:{
-        //     after:"likes[-1]",
-        //     items:[tweet:{
-        //       _type:'reference',
-        //       _ref:data.new_user,
-        //     }]
+        //     after:"saves[-1]",
+        //     items:[data.new_user]
         //   }
-        // }
+        // } need tro make changes to sanity schema.
       }
     ]
   }

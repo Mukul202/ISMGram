@@ -5,13 +5,18 @@ export default {
   fields: [
     {
       name: 'username',
-      title: 'Username',
+      title: 'Username/ Anonymous Name',
       type: 'string',
     },
     {
       name:'blockUser',
       title:'Block User',
       type:'boolean',
+    },
+    {
+      name: 'realname',
+      title: 'Real Name',
+      type: 'string',
     },
     {
       name: 'email',

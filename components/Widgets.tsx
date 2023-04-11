@@ -69,10 +69,10 @@ function Widgets() {
   // if(!mounted)return null;
 
   return (
-    <div className="col-span-2 mt-2 hidden h-screen overflow-scroll px-2 scrollbar-hide lg:inline">
+    <div className="col-span-4 mt-2 hidden h-screen overflow-scroll px-2 scrollbar-hide lg:inline">
       {/* Search Box */}
       {/* <Link href={`/search/${input}`}> */}
-      <div className="flex items-center space-x-2 rounded-full bg-gray-100 p-3">
+      <div className="flex items-center space-x-2 rounded-full bg-gray-100 p-3 w-3/4">
         <SearchIcon className="h-5 w-5 text-gray-400" />
         <form onSubmit={handleSubmit}>
           <input
@@ -119,7 +119,7 @@ function Widgets() {
         <YouTubeEmbed
           url="https://www.youtube.com/watch?v=sK6MI_nBiTA"
           width={325}
-        />
+        />{/*youtube one wont be visible on local host*/}
         {/* </Suspense> */}
       </div>
     </div>

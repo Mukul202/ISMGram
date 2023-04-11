@@ -141,7 +141,7 @@ const Home: NextPage<Props> = ({tweets}) => {
       clearTimeout(userData);
     }
   },[session?.user?.email])
-
+  //console.log(user);
   return (
     <div className="lg:max-w-9xl mx-auto max-h-screen overflow-hidden">
       <Head>
@@ -151,14 +151,17 @@ const Home: NextPage<Props> = ({tweets}) => {
 
       <Toaster />
 
-      <div className="grid grid-cols-9">
+      
         {/* <Suspense fallback={<JumpCircleLoading />}> */}
           {/* {
             // console.log(user)
           } */}
+          
           <SideBar />
+        <div className="grid lg:grid-cols-12 grid-cols-none">
         {/* </Suspense> */}
         {/* <Suspense fallback={<JumpCircleLoading />}> */}
+          <div className='lg:col-span-2'></div>
           <Feed
           // tweets={globalTweets}
           // setGlobalTweets={setGlobalTweets}
@@ -166,6 +169,7 @@ const Home: NextPage<Props> = ({tweets}) => {
         {/* </Suspense> */}
         {/* <Suspense fallback={<JumpCircleLoading />}> */}
           <Widgets />
+          <div className='lg:col-span-1'></div>
         {/* </Suspense> */}
       </div>
     </div>
